@@ -1,0 +1,24 @@
+.chart rect {
+  fill: #3f51b5
+}
+
+.chart text {
+  fill: black;
+  font: 12px sans-serif;
+  text-anchor: end;
+}
+
+.chart rect.purple,
+.chart text.purple {
+  fill: #9f3b7e;
+}
+
+.chart rect.teal,
+.chart text.teal {
+  fill: #03a5ad;
+}
+
+.chart rect.blue,
+.chart text.blue {
+  fill: #3f51b5;
+}
