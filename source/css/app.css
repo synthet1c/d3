@@ -1,24 +1,90 @@
+svg {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
 .chart rect {
-  fill: #3f51b5
 }
 
 .chart text {
   fill: black;
   font: 12px sans-serif;
-  text-anchor: end;
 }
 
+.chart text.chart__trigger__label {
+  font: 14px sans-serif;
+  text-transform: uppercase;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.chart text.chart__trigger__label--all {
+  font: 14px sans-serif;
+  cursor: pointer;
+	fill: #080559;
+}
+
+.chart__trigger.purple:hover,
 .chart rect.purple,
 .chart text.purple {
   fill: #9f3b7e;
 }
 
+.chart__inner.purple .chart__trigger.purple {
+  fill: #9f3b7e;
+  stroke: #9f3b7e;
+}
+
+.chart__trigger.teal:hover,
 .chart rect.teal,
 .chart text.teal {
   fill: #03a5ad;
 }
 
+.chart .percentage {
+  font: 12px sans-serif;
+  font-weight: bold;
+}
+
+.chart__inner.teal .chart__trigger.teal {
+  fill: #03a5ad;
+  stroke: #03a5ad;
+}
+
+.chart__trigger.blue:hover,
 .chart rect.blue,
 .chart text.blue {
   fill: #3f51b5;
+}
+
+.chart__inner.blue .chart__trigger.blue {
+  fill: #3f51b5;
+  stroke: #3f51b5;
+}
+.chart__trigger,
+.chart__trigger__all {
+  fill: white;
+  stroke: #3b3b3b;
+  transition: .4s fill;
+  cursor: pointer;
+}
+
+.chart__inner:not(.purple):not(.teal):not(.blue) .chart__trigger__all {
+  fill: #B1B3B6;
+}
+
+/* purple */
+.chart__inner.purple .chart__bar.teal,
+.chart__inner.purple .chart__bar.blue,
+/* teal */
+.chart__inner.teal .chart__bar.purple,
+.chart__inner.teal .chart__bar.blue,
+/* blue */
+.chart__inner.blue .chart__bar.purple,
+.chart__inner.blue .chart__bar.teal {
+  opacity: 0.3
+}
+
+.chart__bar {
+  transition: .4s opacity;
 }

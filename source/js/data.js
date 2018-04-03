@@ -8,22 +8,6 @@ const data = [
     value: 14
   },
   {
-    name: 'Advertising, Arts & Media',
-    value: 12.3
-  },
-  {
-    name: 'Information & Communication Technology',
-    value: 10.1
-  },
-  {
-    name: 'Accounting',
-    value: 9.9
-  },
-  {
-    name: 'Consulting & Strategy',
-    value: 9.6
-  },
-  {
     name: 'Science & Technology',
     value: 9.6
   },
@@ -79,6 +63,22 @@ const data = [
     name: 'Hospitality & Tourism',
     value: -4.5
   },
+	{
+		name: 'Advertising, Arts & Media',
+		value: 12.3
+	},
+	{
+		name: 'Information & Communication Technology',
+		value: 10.1
+	},
+	{
+		name: 'Accounting',
+		value: 9.9
+	},
+	{
+		name: 'Consulting & Strategy',
+		value: 9.6
+	},
   {
     name: 'Healthcare & Tourism',
     value: -4.7
