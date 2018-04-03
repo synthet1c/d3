@@ -61,11 +61,11 @@ const circles = [
 	{ x: width - 40, color: '#3f51b5', colorName: 'blue', text: 'Easing' }
 ]
 
-const header = chart
+const Header = chart
 	.append('g')
 		.attr('class', 'chart__header')
 
-header
+Header
 	.append('line')
 	.style('stroke-width', 3)
 	.style('stroke', '#3b3b3b')
@@ -85,7 +85,7 @@ const toggleActive = d => {
 	}
 }
 
-header
+Header
 	.selectAll('circle')
 	.data(circles)
 	.enter().append('circle')
@@ -96,7 +96,7 @@ header
 		.attr('r', 12)
 		.on('click', toggleActive)
 
-header
+Header
 	.selectAll('text')
 	.data(circles)
 	.enter()
@@ -109,15 +109,15 @@ header
 		.text(d => d.text)
 
 // transitiion in the header after the data
-header
+Header
 	.attr('opacity', 0)
 	.transition()
 		.attr('opacity', 1)
 		.duration(400)
-		.delay(2000)
+		.delay(70 * data.length)
 
 // bar groups
-const bar = chart
+const Bar = chart
 	.append('g')
 	.attr('class', 'chart__content')
   .selectAll('g')
@@ -129,7 +129,7 @@ const bar = chart
 		.attr('transform', (d, i) => `translate(0, ${i * barHeight + headerHeight})`)
 
 // bar
-bar.append('rect')
+Bar.append('rect')
   .attr('class', d => `bar ${setColor(d)}`)
   .attr('x', d => d.value < 0 ? x(0) : x(Math.min(0, d.value)))
   .attr('y', d => y(d.value))
@@ -142,7 +142,7 @@ bar.append('rect')
 		.delay((d, i) => i * 60)
 
 // percentage
-bar.append('text')
+const Percentage = Bar.append('text')
   .attr('class', d => `percentage ${setColor(d)}`)
 	.attr('text-anchor', d => d.value < 0 ? 'end' : 'start')
   .attr('x', d => d.value > 0 ? x(d.value) + 5 : x(d.value) - 5)
@@ -156,10 +156,9 @@ bar.append('text')
 		.delay((d, i) => i * 60)
 
 // label
-bar.append('text')
+const Label = Bar.append('text')
 	.attr('class', 'label')
 	.attr('text-anchor', d => d.value < 0 ? 'start' : 'end')
-  // .attr('x', width / 2)
 	.attr('x', d => d.value < 0 ? x(0) + 10 : x(0) - 10)
   .attr('y', barHeight / 2)
   .attr('dy', '.1em')
@@ -174,7 +173,7 @@ console.log(d3)
 
 const axis = d3.axisBottom(x)
 
-chart
+const Axis = chart
 	.append('g')
 	.attr('class', 'chart__axis')
 	.attr('transform', `translate(0, ${height - 120})`)
@@ -183,14 +182,14 @@ chart
 	.transition()
 		.attr('opacity', 1)
 		.duration(400)
-		.delay(2000)
+		.delay(70 * data.length)
 
-const footer = chart
+const Footer = chart
 	.append('g')
 	.attr('class', 'chart__footer')
 	.attr('transform', `translate(0, ${height - 80})`)
 
-footer
+Footer
 	.append('rect')
 		.attr('class', 'chart__trigger__all')
 		.attr('stroke', '#B1B3B6')
@@ -199,16 +198,16 @@ footer
 		.attr('height', 25)
 		.on('click', d => chart.attr('class', 'chart__inner'))
 
-footer.append('text')
+Footer.append('text')
 	.attr('y', 15)
 	.attr('x', 40)
 	.attr('class', 'chart__trigger__label--all')
 	.on('click', d => chart.attr('class', 'chart__inner'))
 	.text('Show All Industries')
 
-footer
+Footer
 	.attr('opacity', 0)
 	.transition()
 		.attr('opacity', 1)
 		.duration(400)
-		.delay(2000)
+		.delay(70 * data.length)
