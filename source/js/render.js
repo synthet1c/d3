@@ -1,5 +1,6 @@
 import * as d3 from "d3";
 import data from './data'
+import { fadeInEach, fadeInEachCss } from "./helpers";
 
 const margin = {
 	top: 50,
@@ -42,7 +43,10 @@ export default function render(data, animate) {
 		.rangeRound([0, barHeight])
 		.padding(0.2)
 
-	const Chart = d3.select('.chart')
+	const Wrapper = d3.select('.chart')
+
+  const Chart = Wrapper
+		.append('svg')
 	// apply the margins to the height and width
 		.attr('viewBox', [
 			0,

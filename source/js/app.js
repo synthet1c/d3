@@ -1,6 +1,8 @@
 import * as d3 from 'd3'
 import data from './data'
 import render from './render'
+import { fadeInEach, fadeInEachCss } from "./helpers";
+
 
 console.log(d3)
 // resort the data by value property
@@ -42,6 +44,8 @@ function renderMobile(data, animate) {
 
 	console.log('datas', data)
 
+	d3.select('.chart').exit().remove()
+
   const margin = {
     top: 50,
     right: 5,
@@ -50,7 +54,7 @@ function renderMobile(data, animate) {
   }
   const barHeight = 50
   const height = barHeight * data.length + (margin.top + margin.bottom + headerHeight + axisHeight)
-  const width = 414 - margin.left - margin.right
+  const width = 500 - margin.left - margin.right
 	const sidebarWidth = width / 2
 
   const x = d3
@@ -77,7 +81,7 @@ function renderMobile(data, animate) {
     .attr('transform', `translate(${margin.left}, ${margin.top})`)
 
   const controls = [
-    { x: 40, color: '#9f3b7e', colorName: 'purple', text: 'Tightening' },
+    { x: 50, color: '#9f3b7e', colorName: 'purple', text: 'Tightening' },
     { x: (width) / 2, color: '#03a5ad', colorName: 'teal', text: 'No Change' },
     { x: (width) - 40, color: '#3f51b5', colorName: 'blue', text: 'Easing' }
   ]
@@ -107,12 +111,12 @@ function renderMobile(data, animate) {
   const InfoSection =
     Header
       .append('g')
-      .attr('class', 'info')
+			.attr('class', 'info')
+			.attr('transform', 'translate(100, -45)')
 
   const HandGroup =
     InfoSection
       .append('g')
-			.attr('transform', 'translate(50, -45)')
       .attr('class', 'info__symbol hand')
 
 	HandGroup
@@ -131,6 +135,7 @@ function renderMobile(data, animate) {
     .append('text')
 			.attr('class', 'info__text')
 			.text('Toggle along the slider to find out more')
+			.attr('transform', 'translate(50, 20)')
 
   Header
     .append('line')
@@ -178,12 +183,12 @@ function renderMobile(data, animate) {
         .on('click', toggleActive)
         .text(d => d.text)
 
-
   // bar groups
-  const Content = Chart
-    .append('g')
-      .attr('class', 'chart__content')
-      .attr('transform', `translate(0, 0)`)
+  const Content =
+		Chart
+			.append('g')
+				.attr('class', 'chart__content')
+				.attr('transform', `translate(0, 0)`)
 
 
   const BarGroups =
@@ -193,7 +198,7 @@ function renderMobile(data, animate) {
         .enter()
           .append('g')
             .attr('class', d => `chart__bar ${setColor(d)}`)
-            .attr('transform', (d, i) => `translate(270, ${i * barHeight + headerHeight})`)
+            .attr('transform', (d, i) => `translate(${sidebarWidth}, ${i * barHeight + headerHeight})`)
 
   // bar
   const Bars =
@@ -271,23 +276,15 @@ function renderMobile(data, animate) {
   }
 }
 
+// renderMobile(data.filter(d => d.value < -5), true)
+// renderMobile(data.filter(d => d.value > -5 && d.value < 5), true)
 renderMobile(data.filter(d => d.value > 5), true)
 // render(data, true)
 
-function fadeInEach(obj, time, delay) {
-  return obj
-   .attr('opacity', 0)
-   .transition()
-   .attr('opacity', 1)
-   .duration(400)
-   .delay((d, i) => i * 60)
-}
+/*
+setTimeout(() => {
+	renderMobile(data.filter(d => d.value > 5), true)
+}, 3000)
+*/
 
-function fadeInEachCss(obj, time, delay) {
-  return obj
-   .attr('opacity', 0)
-   .transition()
-   .attr('class', obj.attr('class') + ' fadein')
-   .duration(400)
-   .delay((d, i) => i * 60)
-}
+

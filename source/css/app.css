@@ -3,7 +3,7 @@ svg {
   margin: 0 auto;
 }
 
-.chart {
+.chart.mobile {
   position: absolute;
   margin: 0;
   padding: 0;
