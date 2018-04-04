@@ -21,12 +21,12 @@ const x = d3
   .range([0, width])
 
 // set the height and width of the chart element
-const chart = d3.select('.chart')
+const Chart = d3.select('.chart')
   .attr('width', width)
   .attr('height', barHeight * data.length)
 
 // create the bars for the chart
-const bar = chart
+const bar = Chart
 // join the data
   .selectAll('g')
   .data(data)

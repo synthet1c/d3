@@ -3,6 +3,12 @@ svg {
   margin: 0 auto;
 }
 
+.chart {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+}
+
 .chart rect {
 }
 
@@ -46,6 +52,10 @@ svg {
   font-weight: bold;
 }
 
+.chart.mobile {
+  font: 16px sans-serif;
+}
+
 .chart__inner.teal .chart__trigger.teal {
   fill: #03a5ad;
   stroke: #03a5ad;
@@ -87,4 +97,28 @@ svg {
 
 .chart__bar {
   transition: .4s opacity;
+}
+
+.chart.mobile .labels {
+  width: 190px;
+  position: absolute;
+  top: 80px;
+}
+
+.chart.mobile .labels__label {
+  display: inline-block;
+	width: 100%;
+  /*background: rgba(0,0,0,0.4);*/
+	opacity: 0;
+  font: 14px sans-serif;
+  height: 40px;
+	position: absolute;
+  box-sizing: border-box;
+  padding: 0.2em;
+  transition: .4s opacity;
+  text-align: right;
+}
+
+.chart.mobile .labels__label.fadein {
+  opacity: 1;
 }
