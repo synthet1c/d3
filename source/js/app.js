@@ -198,7 +198,7 @@ function renderMobile(data, animate) {
         .enter()
           .append('g')
             .attr('class', d => `chart__bar ${setColor(d)}`)
-            .attr('transform', (d, i) => `translate(${sidebarWidth}, ${i * barHeight + headerHeight})`)
+            .attr('transform', (d, i) => `translate(${sidebarWidth + 40}, ${i * barHeight + headerHeight})`)
 
   // bar
   const Bars =
@@ -239,7 +239,7 @@ function renderMobile(data, animate) {
 		Chart
 			.append('g')
 			.attr('class', 'chart__axis')
-			.attr('width', width + (sidebarWidth))
+			.attr('width', width)
 			.attr('transform', `translate(${x(sidebarWidth)}, ${height - 120})`)
 			.call(axis)
 
