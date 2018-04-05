@@ -1,9 +1,14 @@
 import * as d3 from "d3";
 import data from './data'
-import { fadeInEach, fadeInEachCss } from "./helpers";
+import {
+	fadeInEach,
+	fadeInEachCss,
+	handPath,
+	handPalmPath,
+} from "./helpers";
 
 const margin = {
-	top: 50,
+	top: 60,
 	right: 50,
 	bottom: 50,
 	left: 50,
@@ -12,8 +17,8 @@ const margin = {
 const barHeight = 25
 const headerHeight = 60
 const axisHeight = 40
-const footerHeight = 40
-const width = 800 - margin.left - margin.right
+const footerHeight = 80
+const width = 900 - margin.left - margin.right
 
 const prop = x => o => o[x]
 
@@ -31,7 +36,7 @@ const setColor = d => {
 export default function render(data, animate) {
 
 	console.log('data', data)
-	const height = barHeight * data.length + (margin.top + margin.bottom + headerHeight + axisHeight)
+	const height = barHeight * data.length + (margin.top + margin.bottom + headerHeight + axisHeight + footerHeight)
 
 	const x = d3
 		.scaleLinear()
@@ -66,17 +71,47 @@ export default function render(data, animate) {
 	]
 
 	const Header = Chart
-		.append('g')
-		.attr('class', 'chart__header')
+    .append('g')
+      .attr('class', 'chart__header')
 
-	Header
-		.append('line')
-		.style('stroke-width', 3)
-		.style('stroke', '#3b3b3b')
-		.attr('x1', 40)
-		.attr('y1', 0)
-		.attr('x2', width - 40)
-		.attr('y2', 0)
+  const InfoSection =
+    Header
+      .append('g')
+			.attr('class', 'info')
+			// .attr('transform', 'translate(100, -45)')
+			.attr('transform', 'translate(275, -50)')
+
+  const HandGroup =
+    InfoSection
+      .append('g')
+      .attr('class', 'info__symbol hand')
+
+	HandGroup
+		.append('path')
+		.attr('d', handPath)
+		.attr('stroke', '#9f3b7e')
+
+  HandGroup
+    .append('path')
+			.attr('d', handPalmPath)
+      .attr('transform', 'translate(22 8)')
+			.attr('stroke', '#9f3b7e')
+		  .attr('fill', '#9f3b7e')
+
+  InfoSection
+    .append('text')
+			.attr('class', 'info__text')
+			.text('Toggle along the slider to find out more')
+			.attr('transform', 'translate(50, 20)')
+
+  Header
+    .append('line')
+			.style('stroke-width', 3)
+			.style('stroke', '#3b3b3b')
+			.attr('x1', 40)
+			.attr('y1', 0)
+			.attr('x2', width - 40)
+			.attr('y2', 0)
 
 	const toggleActive = d => {
 		d3.event.stopPropagation()
@@ -166,20 +201,18 @@ export default function render(data, animate) {
 		.attr('dy', '.1em')
 		.text(d => d.name)
 
-
 	const axis = d3.axisBottom(x)
 
 	const Axis = Chart
 		.append('g')
 		.attr('class', 'chart__axis')
-		.attr('transform', `translate(0, ${height - 120})`)
+		.attr('transform', `translate(0, ${height - 210})`)
 		.call(axis)
-
 
 	const Footer = Chart
 		.append('g')
 		.attr('class', 'chart__footer')
-		.attr('transform', `translate(0, ${height - 80})`)
+		.attr('transform', `translate(0, ${height - 160})`)
 
 	Footer
 		.append('rect')
@@ -196,6 +229,29 @@ export default function render(data, animate) {
 		.attr('class', 'chart__trigger__label--all')
 		.on('click', d => Chart.attr('class', 'chart__inner'))
 		.text('Show All Industries')
+
+	const Disclaimer =
+		Footer
+			.append('g')
+			.attr('class', 'chart__disclaimer')
+			.attr('transform', `translate(0, 60)`)
+
+	Disclaimer
+		.append('text')
+		.text('AU: Source:')
+		.style('font-weight', 'bold')
+
+	Disclaimer
+		.append('text')
+		.text('SEEK Employment Trends. January - December 2017 vs. January - December 2016. Published April 2018.')
+		.attr('transform', `translate(60, 0)`)
+
+	Footer.append('svg:image')
+		.attr('xlink:href', '/logo.svg')
+		.attr('height', 68)
+		.attr('width', 100)
+		.attr('x', width - 200)
+
 
 	if (animate) {
 		fadeInEach(Header, 400, 70 * data.length)
