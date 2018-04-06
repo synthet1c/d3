@@ -1,12 +1,17 @@
-svg {
-  max-width: 800px;
-  margin: 0 auto;
+.chart {
+	width: 100%;
+	max-width: 900px;
+	margin: 0 auto;
 }
 
 .chart.mobile {
-  position: absolute;
+  position: relative;
   margin: 0;
   padding: 0;
+}
+
+.chart svg {
+	width: 100%;
 }
 
 .chart rect {
