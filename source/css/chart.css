@@ -12,6 +12,21 @@
 	width: 100%;
 }
 
+.chart.desktop.purple .chart__bar--teal,
+.chart.desktop.purple .chart__bar--blue {
+	opacity: .3;
+}
+
+.chart.desktop.teal .chart__bar--purple,
+.chart.desktop.teal .chart__bar--blue {
+	opacity: .3;
+}
+
+.chart.desktop.blue .chart__bar--teal,
+.chart.desktop.blue .chart__bar--purple {
+	opacity: .3;
+}
+
 .chart__svg {
 	width: 100%;
 }
@@ -52,6 +67,10 @@
 	width: 200px;
 }
 
+.chart__bar {
+	transition: .4s opacity;
+}
+
 .chart__bar--purple {
 	fill: #9f3b7e;
 }
@@ -62,4 +81,30 @@
 
 .chart__bar--blue {
 	fill: #3f51b5;
+}
+
+.chart__footer {
+	position: relative;
+	height: 75px;
+	width: 100%;
+}
+
+.chart__footer--disclaimer {
+	position: absolute;
+	top: 0;
+	right: 100px;
+	bottom: 0;
+	left: 10px;
+}
+
+@media screen and (min-width: 700px) {
+	.chart__footer--disclaimer {
+		padding: 0 2em;
+	}
+}
+.chart__footer--image {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 100px;
 }
