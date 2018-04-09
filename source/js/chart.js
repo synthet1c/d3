@@ -50,7 +50,7 @@ export default function chart(target, size, data) {
 
 	let allData = data
 	let currentData = data
-	let currentWidth = window.innerWidth - 100
+	let currentWidth = innerWidth() - 100
 	let currentHeight = 0
 	let currentColor = ''
 	let totalHeight = 0
@@ -130,6 +130,7 @@ export default function chart(target, size, data) {
 	}
 
 	function resize(e) {
+		innerWidth()
 		setWidth()
 		if (isMobile()) {
 			initMobile(currentData, 500)
@@ -167,7 +168,7 @@ export default function chart(target, size, data) {
 	function setWidth() {
 		return (
 			currentWidth = (
-					window.innerWidth
+					innerWidth()
         - settings.chart.padding.left
         - settings.chart.padding.right
         - settings.content.padding.left
@@ -233,7 +234,7 @@ export default function chart(target, size, data) {
 
 		SVG
 			.attr('height', currentHeight)
-			.attr('width', window.innerWidth)
+			.attr('width', innerWidth())
 		// set the svg size
 		switch (getPosition(data)) {
 			case 'all':
@@ -280,6 +281,33 @@ export default function chart(target, size, data) {
 
 		newBar.attr('class', d => `chart__bar chart__bar--${setColor(d)}`)
 
+		if (size === 'desktop' && currentColor) {
+			newBar
+				.transition()
+				.delay((d, i) => i * 16)
+				.duration(30)
+				.style('opacity', d => {
+					const color = setColor(d)
+					const self = d3.select(this)
+					switch (currentColor) {
+						case 'purple':
+							return (color === 'teal' || color === 'blue') ? 0.3 : 1
+						case 'teal':
+							return (color === 'purple' || color === 'blue') ? 0.3 : 1
+						case 'blue':
+							return (color === 'purple' || color === 'teal') ? 0.3 : 1
+							break
+					}
+				})
+		}
+		else if (size === 'desktop' && !currentColor || size === 'mobile') {
+			newBar
+				.transition()
+				.delay((d, i) => i * 16)
+				.duration(30)
+				.style('opacity', 1)
+		}
+
 		newBar = newBar
 			.enter()
 			.append('g')
@@ -288,8 +316,8 @@ export default function chart(target, size, data) {
 		newBar
 			.style('opacity', 0)
 			.transition()
-				.duration(500)
-				.delay((d, i) => i * 100)
+				.duration(60)
+				.delay((d, i) => i * 16)
 				.style('opacity', 1)
 
 		let a = newBar
@@ -553,24 +581,24 @@ export default function chart(target, size, data) {
 					update(allData.filter(d => d.value > 5), 500, 'mobile')
 					break
 			}
-			if (currentColor === d.colorName) {
-
-			}
+			currentColor = d.colorName
 		}
 		else {
 			if (currentColor === d.colorName) {
 				Wrapper.attr('class', `chart desktop`)
+				currentColor = ''
 			}
 			else {
 				Wrapper.attr('class', `chart desktop ${d.colorName}`)
+				currentColor = d.colorName
 			}
+			update(allData, 500, 'desktop')
 		}
-		currentColor = d.colorName
 	}
 
 	function initControls() {
 
-		const width = Math.min(window.innerWidth, settings.controls.maxwidth)
+		const width = Math.min(innerWidth(), settings.controls.maxwidth)
 
 		const circles = [
 			{x: settings.controls.offset, color: '#9f3b7e', colorName: 'purple', text: 'Tightening'},
@@ -579,7 +607,7 @@ export default function chart(target, size, data) {
 		]
 
 		Controls.attr('transform', translate(
-			(window.innerWidth - width) / 2,
+			(innerWidth() - width) / 2,
 			40
 		))
 
@@ -644,7 +672,7 @@ export default function chart(target, size, data) {
 
 	function updateControls() {
 
-		const width = Math.min(window.innerWidth, settings.controls.maxwidth)
+		const width = Math.min(innerWidth(), settings.controls.maxwidth)
 
 		const circles = [
 			{x: settings.controls.offset, color: '#9f3b7e', colorName: 'purple', text: 'Tightening'},
@@ -655,13 +683,13 @@ export default function chart(target, size, data) {
 		Info
 			.transition()
 			.duration(500)
-			.attr('transform', translate((window.innerWidth - 260) / 2, 0))
+			.attr('transform', translate((innerWidth() - 260) / 2, 0))
 
 		Controls
 			.transition()
 			.duration(500)
 			.attr('transform', translate(
-				(window.innerWidth - width) / 2,
+				(innerWidth() - width) / 2,
 				40
 			))
 
@@ -761,6 +789,23 @@ export default function chart(target, size, data) {
 
 	function px(x) {
 		return x + 'px'
+	}
+
+	/**
+	 * innerWidth
+	 *
+	 * find the inner width of the outer .chart element.
+	 *
+	 * @returns {*}
+	 */
+	function innerWidth() {
+		const chart = document.querySelector('.chart')
+		if (chart.scrollWidth)
+			return parseInt(chart.scrollWidth)
+
+		const width = parseInt(window.getComputedStyle(chart).width)
+		chart.dataset.width = width
+		return width
 	}
 
 	function debounce(fn) {
