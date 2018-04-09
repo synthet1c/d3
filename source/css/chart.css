@@ -1,8 +1,19 @@
+:root {
+	--color-purple: #9f3b7e;
+	--color-teal: #03a5ad;
+	--color-blue: #3f51b5;
+}
+
 .chart {
 	padding: 0;
 	margin: 0;
 	position: relative;
 	font: 12px sans-serif;
+	width: 100%;
+}
+
+.chart__svg {
+	width: 100%;
 }
 
 .chart__inner {
@@ -23,9 +34,22 @@
 .chart__bar {
 
 }
-
+.chart__bar--purple,
+.chart__bar--purple .chart__bar--bar {
+	fill: var(--color-purple);
+}
+.chart__bar--teal {
+	fill: var(--color-teal);
+}
+.chart__bar--blue {
+	fill: var(--color-blue);
+}
 .chart__labels {
 	position: absolute;
+}
+
+.chart__label {
+	width: 200px;
 }
 
 .chart__bar--purple {

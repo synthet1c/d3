@@ -7,7 +7,7 @@ const filtered = data.filter(d => d.value > 5)
 
 const mychart = chart('.chart', 500, filtered)
 
-mychart.init(filtered)
+mychart.init(data)
 
 let current = 0
 
