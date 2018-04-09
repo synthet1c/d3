@@ -12,7 +12,6 @@ mychart.init(filtered)
 let current = 0
 
 window.next = function() {
-	/*
 	switch (current) {
 		case 0:
 			mychart.update(data.filter(d => d.value < -5))
@@ -21,16 +20,8 @@ window.next = function() {
 			mychart.update(data.filter(d => d.value > -5 && d.value < 5))
 			break
 		case 2:
-			mychart.update(data.filter(d => d.value < -5))
-			break
-	}
-	*/
-	switch (current) {
-		case 0:
-			mychart.update(data)
-			break
-		case 1:
 			mychart.update(data.filter(d => d.value > 5))
+			break
 	}
-	current = (current + 1) % 2
+	current = (current + 1) % 3
 }
